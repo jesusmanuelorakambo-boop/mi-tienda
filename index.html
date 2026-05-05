@@ -37,10 +37,8 @@ input,textarea,select{font-family:var(--font-body)}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 
-/* ======== LAYOUT ======== */
 #app{display:flex;height:100vh;overflow:hidden}
 
-/* ======== SIDEBAR ======== */
 #sidebar{
   width:280px;min-width:280px;
   background:var(--bg2);
@@ -85,10 +83,7 @@ input,textarea,select{font-family:var(--font-body)}
   margin-bottom:2px;
 }
 .store-item:hover{background:var(--bg3)}
-.store-item.active{
-  background:var(--bg3);
-  border-left-color:var(--accent);
-}
+.store-item.active{background:var(--bg3);border-left-color:var(--accent)}
 .store-avatar{
   width:44px;height:44px;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
@@ -109,8 +104,7 @@ input,textarea,select{font-family:var(--font-body)}
 .store-count{
   background:var(--accent);color:#000;
   border-radius:6px;padding:2px 7px;
-  font-size:11px;font-weight:700;
-  flex-shrink:0;
+  font-size:11px;font-weight:700;flex-shrink:0;
 }
 #sidebar-footer{padding:12px;border-top:1px solid var(--border)}
 #btn-create-store{
@@ -124,22 +118,18 @@ input,textarea,select{font-family:var(--font-body)}
 #btn-create-store:hover{background:var(--accent3)}
 #btn-create-store:active{transform:scale(.98)}
 
-/* ======== MAIN ======== */
 #main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
 
-/* STORE HEADER */
 #store-header{
   padding:14px 24px;
   border-bottom:1px solid var(--border);
   display:flex;align-items:center;gap:14px;
-  background:var(--bg2);
-  min-height:72px;
+  background:var(--bg2);min-height:72px;
 }
 .hdr-avatar{
   width:46px;height:46px;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  font-family:var(--font-head);font-weight:700;font-size:20px;
-  flex-shrink:0;
+  font-family:var(--font-head);font-weight:700;font-size:20px;flex-shrink:0;
 }
 #hdr-name{font-family:var(--font-head);font-size:17px;font-weight:700}
 #hdr-sub{font-size:12px;color:var(--text2);margin-top:3px}
@@ -154,24 +144,12 @@ input,textarea,select{font-family:var(--font-body)}
 .icon-btn:hover{background:var(--bg4);color:var(--text);border-color:var(--border2)}
 .icon-btn .ico{font-size:15px}
 
-/* FEED */
-#feed{
-  flex:1;overflow-y:auto;
-  padding:20px 24px;
-  display:flex;flex-direction:column;gap:20px;
-}
-#feed-inner{
-  max-width:600px;width:100%;
-  margin:0 auto;
-  display:flex;flex-direction:column;gap:20px;
-}
+#feed{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:20px}
+#feed-inner{max-width:600px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:20px}
 
-/* POST CARD */
 .post-card{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:var(--radius2);
-  overflow:hidden;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius2);overflow:hidden;
   transition:border-color .2s,transform .2s;
   animation:slideIn .3s ease;
 }
@@ -189,8 +167,7 @@ input,textarea,select{font-family:var(--font-body)}
 .post-img-placeholder .ico{font-size:40px;opacity:.3}
 .post-store-tag{
   position:absolute;top:12px;left:12px;
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(8px);
+  background:rgba(0,0,0,.6);backdrop-filter:blur(8px);
   border-radius:20px;padding:4px 12px;
   font-size:11px;font-weight:600;color:var(--text);
   display:flex;align-items:center;gap:6px;
@@ -208,10 +185,7 @@ input,textarea,select{font-family:var(--font-body)}
 .post-old-price{font-size:12px;text-decoration:line-through;color:var(--text3);margin-top:2px;text-align:right}
 .post-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:12px}
 .post-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.tag{
-  background:var(--bg3);border:1px solid var(--border2);
-  border-radius:20px;font-size:11px;padding:3px 10px;color:var(--text2);
-}
+.tag{background:var(--bg3);border:1px solid var(--border2);border-radius:20px;font-size:11px;padding:3px 10px;color:var(--text2)}
 .post-actions{display:flex;gap:8px}
 .btn-contact{
   flex:1;background:var(--accent);color:#000;
@@ -225,8 +199,7 @@ input,textarea,select{font-family:var(--font-body)}
   background:var(--bg3);color:var(--text2);
   border:1px solid var(--border);border-radius:8px;
   padding:10px 14px;font-size:13px;
-  transition:all .15s;
-  display:flex;align-items:center;gap:5px;
+  transition:all .15s;display:flex;align-items:center;gap:5px;
 }
 .btn-like:hover{background:var(--bg4);color:var(--red);border-color:var(--red)}
 .btn-like.liked{background:#2e1a1a;color:var(--red);border-color:#4a2020}
@@ -234,14 +207,13 @@ input,textarea,select{font-family:var(--font-body)}
   display:flex;align-items:center;justify-content:space-between;
   padding:8px 16px 12px;font-size:11px;color:var(--text3);
 }
-.github-chip{
+.supabase-chip{
   display:flex;align-items:center;gap:4px;
   background:var(--bg3);border:1px solid var(--border);
   border-radius:20px;padding:3px 9px;font-size:10px;color:var(--text3);
 }
-.gh-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
 
-/* EMPTY STATE */
 .empty-state{
   flex:1;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
@@ -250,7 +222,6 @@ input,textarea,select{font-family:var(--font-body)}
 .empty-state .big-ico{font-size:56px;opacity:.25}
 .empty-state p{font-size:14px;line-height:1.7;max-width:240px}
 
-/* WELCOME SCREEN */
 #welcome{
   flex:1;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
@@ -265,15 +236,12 @@ input,textarea,select{font-family:var(--font-body)}
 #welcome h1{font-family:var(--font-head);font-size:28px;font-weight:800;line-height:1.2}
 #welcome h1 span{color:var(--accent)}
 #welcome p{font-size:15px;color:var(--text2);max-width:320px;line-height:1.7}
-.welcome-steps{
-  display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px;
-}
+.welcome-steps{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
 .step-chip{
   background:var(--bg3);border:1px solid var(--border2);
   border-radius:10px;padding:10px 14px;
   font-size:13px;color:var(--text2);text-align:left;
-  display:flex;align-items:center;gap:8px;
-  max-width:190px;
+  display:flex;align-items:center;gap:8px;max-width:190px;
 }
 .step-num{
   width:22px;height:22px;border-radius:6px;
@@ -282,19 +250,14 @@ input,textarea,select{font-family:var(--font-body)}
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 
-/* PUBLISH PANEL */
 #publish-bar{
-  border-top:1px solid var(--border);
-  background:var(--bg2);
-  overflow:hidden;
-  max-height:0;transition:max-height .3s ease,padding .3s ease;
+  border-top:1px solid var(--border);background:var(--bg2);
+  overflow:hidden;max-height:0;
+  transition:max-height .3s ease,padding .3s ease;
   padding:0 24px;
 }
 #publish-bar.open{max-height:200px;padding:16px 24px}
-.pub-bar-header{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:12px;
-}
+.pub-bar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .pub-bar-title{font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--accent)}
 .pub-fields{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
 .pf{display:flex;flex-direction:column;gap:4px}
@@ -314,13 +277,12 @@ input,textarea,select{font-family:var(--font-body)}
 }
 .btn-pub:hover{background:var(--accent3)}
 .btn-pub:active{transform:scale(.98)}
+.btn-pub:disabled{opacity:.5;cursor:not-allowed}
 
-/* MODALS */
 .modal-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,.75);
   display:flex;align-items:center;justify-content:center;
-  z-index:200;backdrop-filter:blur(6px);
-  animation:fadeIn .15s ease;
+  z-index:200;backdrop-filter:blur(6px);animation:fadeIn .15s ease;
 }
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .modal{
@@ -363,7 +325,6 @@ input,textarea,select{font-family:var(--font-body)}
 }
 .btn-cancel:hover{background:var(--bg4);border-color:var(--border2)}
 
-/* SPINNER */
 .spinner{
   width:16px;height:16px;border:2px solid rgba(0,0,0,.2);
   border-top-color:#000;border-radius:50%;
@@ -371,7 +332,6 @@ input,textarea,select{font-family:var(--font-body)}
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* CREATING OVERLAY */
 .creating-state{
   display:flex;flex-direction:column;align-items:center;gap:12px;
   padding:16px 0 4px;text-align:center;
@@ -383,7 +343,6 @@ input,textarea,select{font-family:var(--font-body)}
 }
 .creating-state p{font-size:13px;color:var(--text2);line-height:1.6}
 
-/* COLOR PICKER */
 .color-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .color-swatch{
   width:28px;height:28px;border-radius:8px;cursor:pointer;
@@ -393,7 +352,6 @@ input,textarea,select{font-family:var(--font-body)}
 
 .hidden{display:none!important}
 
-/* TOAST */
 #toast{
   position:fixed;bottom:24px;right:24px;
   background:var(--bg4);border:1px solid var(--border2);
@@ -407,12 +365,20 @@ input,textarea,select{font-family:var(--font-body)}
 }
 #toast.show{transform:translateY(0);opacity:1}
 #toast .t-ico{font-size:16px}
+
+/* Loading skeleton */
+.skeleton{
+  background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.4s infinite;
+  border-radius:8px;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 </style>
 </head>
 <body>
 
 <div id="app">
-  <!-- SIDEBAR -->
   <div id="sidebar">
     <div id="sidebar-header">
       <div class="logo-mark">M</div>
@@ -426,6 +392,10 @@ input,textarea,select{font-family:var(--font-body)}
     </div>
     <div id="stores-list">
       <div class="stores-section-label">Mis tiendas</div>
+      <div style="padding:16px 8px;display:flex;flex-direction:column;gap:8px">
+        <div class="skeleton" style="height:64px;border-radius:10px"></div>
+        <div class="skeleton" style="height:64px;border-radius:10px"></div>
+      </div>
     </div>
     <div id="sidebar-footer">
       <button id="btn-create-store" onclick="openCreateStore()">
@@ -434,9 +404,7 @@ input,textarea,select{font-family:var(--font-body)}
     </div>
   </div>
 
-  <!-- MAIN -->
   <div id="main">
-    <!-- HEADER -->
     <div id="store-header">
       <div class="hdr-avatar" id="hdr-avatar" style="background:var(--bg3);color:var(--text3);font-size:14px">?</div>
       <div id="hdr-info">
@@ -444,11 +412,12 @@ input,textarea,select{font-family:var(--font-body)}
         <div id="hdr-sub"></div>
       </div>
       <div id="hdr-actions" class="hidden">
-        <button class="icon-btn" id="btn-toggle-pub" onclick="togglePublish()"><span class="ico" id="pub-ico">＋</span> Publicar producto</button>
+        <button class="icon-btn" id="btn-toggle-pub" onclick="togglePublish()">
+          <span class="ico" id="pub-ico">＋</span> Publicar producto
+        </button>
       </div>
     </div>
 
-    <!-- PUBLISH BAR -->
     <div id="publish-bar">
       <div class="pub-bar-header">
         <span class="pub-bar-title">Nuevo producto</span>
@@ -472,26 +441,25 @@ input,textarea,select{font-family:var(--font-body)}
         </div>
         <div class="pf" style="flex:2;min-width:160px">
           <label>Descripción</label>
-          <input type="text" id="pf-desc" placeholder="Breve descripción del producto...">
+          <input type="text" id="pf-desc" placeholder="Breve descripción...">
         </div>
         <div class="pf" style="flex:1;min-width:180px">
           <label>URL de imagen</label>
           <input type="text" id="pf-img" placeholder="https://...">
         </div>
-        <button class="btn-pub" onclick="publishProduct()">Publicar →</button>
+        <button class="btn-pub" id="btn-pub-submit" onclick="publishProduct()">Publicar →</button>
       </div>
     </div>
 
-    <!-- FEED -->
     <div id="feed">
       <div id="welcome">
         <div class="welcome-logo">M</div>
         <h1>Tu mercado,<br><span>tus reglas.</span></h1>
-        <p>Crea tu tienda, publica productos con imagen y precio, y todo se guarda automáticamente.</p>
+        <p>Crea tu tienda, publica productos con imagen y precio, y todo se guarda automáticamente en Supabase.</p>
         <div class="welcome-steps">
           <div class="step-chip"><div class="step-num">1</div>Crea una tienda con nombre y categoría</div>
           <div class="step-chip"><div class="step-num">2</div>Publica productos con foto y precio</div>
-          <div class="step-chip"><div class="step-num">3</div>Cada publicación se guarda automáticamente</div>
+          <div class="step-chip"><div class="step-num">3</div>Todo se guarda en la base de datos</div>
         </div>
       </div>
     </div>
@@ -505,7 +473,6 @@ input,textarea,select{font-family:var(--font-body)}
       <span class="modal-ico">🏪</span>
       <h2>Nueva tienda</h2>
     </div>
-
     <div id="create-form">
       <div class="fg">
         <label>Nombre de la tienda</label>
@@ -537,300 +504,274 @@ input,textarea,select{font-family:var(--font-body)}
           <div class="color-grid" id="color-grid"></div>
         </div>
       </div>
-
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeModal('modal-create')">Cancelar</button>
-        <button class="btn-ok" id="btn-create-ok" onclick="createStore()">
-          Crear tienda
-        </button>
+        <button class="btn-ok" id="btn-create-ok" onclick="createStore()">Crear tienda</button>
       </div>
     </div>
-
-    <!-- Estado de creación (spinner) -->
     <div id="creating-state" class="creating-state hidden">
       <div class="big-spinner"></div>
-      <p id="creating-msg">Preparando tu tienda...</p>
+      <p id="creating-msg">Guardando en Supabase...</p>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
 <div id="toast"><span class="t-ico" id="toast-ico">✓</span><span id="toast-msg"></span></div>
 
 <script>
-// ==================== CONFIGURACIÓN INTERNA ====================
-// ⚠️ Solo el administrador debe modificar estas variables
-const GH_OWNER  = '-';   // Tu usuario de GitHub
-const GH_TOKEN  = '-';               // ← Pon aquí tu token de GitHub (ghp_xxx...)
+// ==================== SUPABASE CONFIG ====================
+const SUPABASE_URL = 'https://cllfjtsypgjasdggbswb.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsbGZqdHN5cGdqYXNkZ2dic3diIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5OTcxMjksImV4cCI6MjA5MzU3MzEyOX0.xF2H-d3ta4AHq1ah7koZ4da0GUhBkRt-wX_vjgkVBQA';
 
-// ==================== DATA ====================
-const STORE_COLORS = ['#e8c040','#60a5fa','#4ade80','#f87171','#a78bfa','#fb923c','#34d399','#f472b6','#38bdf8','#facc15'];
+const api = {
+  headers: {
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+  },
 
-let stores = [
-  {
-    id:1,name:"Boutique Luna",desc:"Ropa femenina exclusiva y accesorios de moda",
-    cat:"Ropa y moda",repo:"boutique-luna",color:"#e8c040",
-    posts:[
-      {id:1,name:"Vestido Florido",desc:"Elegante vestido de verano con estampado de flores. Tela fresca y ligera, perfecta para el calor.",price:"$45.00",oldPrice:"$60.00",tags:["verano","floral","mujer"],img:"https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=600&q=80",time:"hace 2 horas",likes:12,liked:false},
-      {id:2,name:"Blusa de Seda Premium",desc:"Blusa de seda natural con caída perfecta. Disponible en blanco, negro y azul marino.",price:"$38.00",tags:["premium","seda","elegante"],img:"https://images.unsplash.com/photo-1562157873-818bc0726f68?w=600&q=80",time:"hace 5 horas",likes:8,liked:false}
-    ]
+  async getStores() {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/stores?order=created_at.asc`, { headers: this.headers });
+    if (!r.ok) throw new Error('Error cargando tiendas');
+    return r.json();
   },
-  {
-    id:2,name:"TechStore Pro",desc:"Gadgets, electrónica y accesorios tecnológicos",
-    cat:"Electrónica",repo:"techstore-pro",color:"#60a5fa",
-    posts:[
-      {id:1,name:"Auriculares Inalámbricos",desc:"Sonido de alta fidelidad con cancelación activa de ruido. 30h de batería, carga rápida USB-C.",price:"$89.00",oldPrice:"$110.00",tags:["audio","wireless","ANC"],img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",time:"hace 1 hora",likes:23,liked:false},
-      {id:2,name:"Smartwatch Deportivo",desc:"Monitoreo de salud 24/7, GPS integrado, resistente al agua hasta 50m. Compatible con iOS y Android.",price:"$129.00",tags:["smartwatch","deporte","GPS"],img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",time:"hace 3 horas",likes:17,liked:false}
-    ]
+
+  async createStore(data) {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/stores`, {
+      method: 'POST', headers: this.headers, body: JSON.stringify(data)
+    });
+    if (!r.ok) throw new Error('Error creando tienda');
+    const rows = await r.json();
+    return rows[0];
   },
-  {
-    id:3,name:"Artesanías del Sur",desc:"Piezas únicas hechas a mano con materiales locales",
-    cat:"Artesanías",repo:"artesanias-sur",color:"#4ade80",
-    posts:[]
+
+  async getProducts(storeId) {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/products?store_id=eq.${storeId}&order=created_at.desc`, { headers: this.headers });
+    if (!r.ok) throw new Error('Error cargando productos');
+    return r.json();
+  },
+
+  async createProduct(data) {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/products`, {
+      method: 'POST', headers: this.headers, body: JSON.stringify(data)
+    });
+    if (!r.ok) throw new Error('Error publicando producto');
+    const rows = await r.json();
+    return rows[0];
+  },
+
+  async updateLikes(productId, likes) {
+    await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${productId}`, {
+      method: 'PATCH', headers: this.headers, body: JSON.stringify({ likes })
+    });
   }
-];
+};
 
-let activeId = null;
-let nextStoreId = 4;
-let nextPostId = 100;
+// ==================== STATE ====================
+const STORE_COLORS = ['#e8c040','#60a5fa','#4ade80','#f87171','#a78bfa','#fb923c','#34d399','#f472b6','#38bdf8','#facc15'];
+let stores = [];
+let activeStore = null;
+let activeProducts = [];
 let selectedColor = STORE_COLORS[0];
 let publishOpen = false;
 
+// ==================== INIT ====================
+async function init() {
+  try {
+    stores = await api.getStores();
+    renderSidebar();
+  } catch(e) {
+    showToast('⚠', 'Error conectando con Supabase');
+    // Render sidebar vacío sin skeleton
+    document.getElementById('stores-list').innerHTML = '<div class="stores-section-label">Mis tiendas</div>';
+  }
+}
+
 // ==================== SIDEBAR ====================
-function renderSidebar(filter=''){
+function renderSidebar(filter = '') {
   const list = document.getElementById('stores-list');
   list.innerHTML = '<div class="stores-section-label">Mis tiendas</div>';
   const filtered = stores.filter(s => s.name.toLowerCase().includes(filter.toLowerCase()));
-  if(filtered.length === 0){
+  if (filtered.length === 0) {
     list.innerHTML += '<div style="padding:16px 8px;font-size:13px;color:var(--text3);text-align:center">Sin resultados</div>';
     return;
   }
   filtered.forEach(s => {
-    const last = s.posts.length ? s.posts[s.posts.length-1].name : 'Sin productos aún';
     const div = document.createElement('div');
-    div.className = 'store-item' + (s.id === activeId ? ' active' : '');
-    div.onclick = () => selectStore(s.id);
+    div.className = 'store-item' + (activeStore && s.id === activeStore.id ? ' active' : '');
+    div.onclick = () => selectStore(s);
     div.innerHTML = `
       <div class="store-avatar" style="background:${s.color}22;color:${s.color}">${s.name.charAt(0)}</div>
       <div class="store-info">
         <div class="store-name">${s.name}</div>
-        <div class="store-last">${last}</div>
+        <div class="store-last">${s.category || 'Tienda'}</div>
       </div>
-      ${s.posts.length ? `<div class="store-count">${s.posts.length}</div>` : ''}
     `;
     list.appendChild(div);
   });
 }
 
-function filterStores(){
+function filterStores() {
   renderSidebar(document.getElementById('search-input').value);
 }
 
 // ==================== STORE SELECT ====================
-function selectStore(id){
-  activeId = id;
-  const s = stores.find(x => x.id === id);
-  if(!s) return;
-  const hdrAv = document.getElementById('hdr-avatar');
-  hdrAv.style.background = s.color + '22';
-  hdrAv.style.color = s.color;
-  hdrAv.textContent = s.name.charAt(0);
+async function selectStore(s) {
+  activeStore = s;
+  document.getElementById('hdr-avatar').style.background = s.color + '22';
+  document.getElementById('hdr-avatar').style.color = s.color;
+  document.getElementById('hdr-avatar').textContent = s.name.charAt(0);
   document.getElementById('hdr-name').textContent = s.name;
-  document.getElementById('hdr-sub').textContent = s.cat + '  ·  ' + s.posts.length + (s.posts.length === 1 ? ' producto' : ' productos');
+  document.getElementById('hdr-sub').textContent = s.category || '';
   document.getElementById('hdr-actions').classList.remove('hidden');
-  renderFeed(s);
   renderSidebar(document.getElementById('search-input').value);
   publishOpen = false;
   document.getElementById('publish-bar').classList.remove('open');
   document.getElementById('pub-ico').textContent = '＋';
+
+  // Mostrar loading en feed
+  const feed = document.getElementById('feed');
+  feed.innerHTML = '<div style="padding:32px;display:flex;flex-direction:column;gap:16px;max-width:600px;margin:0 auto;width:100%"><div class="skeleton" style="height:300px;border-radius:16px"></div><div class="skeleton" style="height:300px;border-radius:16px"></div></div>';
+
+  try {
+    activeProducts = await api.getProducts(s.id);
+    document.getElementById('hdr-sub').textContent = (s.category || '') + '  ·  ' + activeProducts.length + (activeProducts.length === 1 ? ' producto' : ' productos');
+    renderFeed();
+  } catch(e) {
+    feed.innerHTML = '<div class="empty-state"><div class="big-ico">⚠️</div><p>Error cargando productos</p></div>';
+  }
 }
 
 // ==================== FEED ====================
-function renderFeed(s){
+function renderFeed() {
   const feed = document.getElementById('feed');
   feed.innerHTML = '';
-  if(s.posts.length === 0){
+  if (activeProducts.length === 0) {
     feed.innerHTML = `
       <div class="empty-state">
         <div class="big-ico">📦</div>
-        <p>Esta tienda aún no tiene productos publicados.<br>¡Publica el primero con el botón de arriba!</p>
+        <p>Esta tienda aún no tiene productos.<br>¡Publica el primero con el botón de arriba!</p>
       </div>`;
     return;
   }
   const inner = document.createElement('div');
   inner.id = 'feed-inner';
-  [...s.posts].reverse().forEach(p => {
-    const card = createPostCard(s, p);
-    inner.appendChild(card);
-  });
+  activeProducts.forEach(p => inner.appendChild(createPostCard(activeStore, p)));
   feed.appendChild(inner);
 }
 
-function createPostCard(store, p){
+function createPostCard(store, p) {
   const card = document.createElement('div');
   card.className = 'post-card';
   card.id = 'post-' + p.id;
-  const imgBlock = p.img
+  const imgBlock = p.image_url
     ? `<div class="post-img-wrap">
-        <img src="${p.img}" alt="${p.name}" onerror="this.parentElement.outerHTML='<div class=post-img-placeholder><div class=ico>🖼</div><span style=font-size:13px>Imagen no disponible</span></div>'">
+        <img src="${p.image_url}" alt="${p.name}" onerror="this.parentElement.outerHTML='<div class=post-img-placeholder><div class=ico>🖼</div><span style=font-size:13px>Imagen no disponible</span></div>'">
         <div class="post-store-tag"><div class="post-store-dot" style="background:${store.color}"></div>${store.name}</div>
        </div>`
     : `<div class="post-img-placeholder"><div class="ico">🖼</div><span style="font-size:13px">Sin imagen</span></div>`;
-  const tags = (p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+  const tags = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+  const timeAgo = formatTime(p.created_at);
   card.innerHTML = `
     ${imgBlock}
     <div class="post-body">
       <div class="post-top-row">
         <div class="post-product-name">${p.name}</div>
         <div>
-          <div class="post-price-badge">${p.price}</div>
-          ${p.oldPrice ? `<div class="post-old-price">${p.oldPrice}</div>` : ''}
+          <div class="post-price-badge">${p.price || '$0.00'}</div>
+          ${p.old_price ? `<div class="post-old-price">${p.old_price}</div>` : ''}
         </div>
       </div>
-      ${p.desc ? `<div class="post-desc">${p.desc}</div>` : ''}
+      ${p.description ? `<div class="post-desc">${p.description}</div>` : ''}
       ${tags ? `<div class="post-tags">${tags}</div>` : ''}
       <div class="post-actions">
         <button class="btn-contact" onclick="contactSeller('${store.name}','${p.name}')">Contactar vendedor</button>
-        <button class="btn-like${p.liked?' liked':''}" onclick="toggleLike(${store.id},${p.id},this)">
-          ${p.liked ? '♥' : '♡'} ${p.likes}
+        <button class="btn-like" id="like-${p.id}" onclick="toggleLike('${p.id}',this)">
+          ♡ ${p.likes || 0}
         </button>
       </div>
     </div>
     <div class="post-footer">
-      <span>${p.time || 'ahora'}</span>
-      <div class="github-chip"><div class="gh-dot"></div>guardado</div>
+      <span>${timeAgo}</span>
+      <div class="supabase-chip"><div class="sb-dot"></div>guardado en Supabase</div>
     </div>
   `;
   return card;
 }
 
-function toggleLike(storeId, postId, btn){
-  const s = stores.find(x=>x.id===storeId);
-  if(!s) return;
-  const p = s.posts.find(x=>x.id===postId);
-  if(!p) return;
-  p.liked = !p.liked;
-  p.likes += p.liked ? 1 : -1;
-  btn.className = 'btn-like' + (p.liked ? ' liked' : '');
-  btn.innerHTML = (p.liked ? '♥' : '♡') + ' ' + p.likes;
+function formatTime(iso) {
+  if (!iso) return 'ahora';
+  const diff = Date.now() - new Date(iso).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 1) return 'ahora';
+  if (m < 60) return `hace ${m} min`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `hace ${h}h`;
+  return `hace ${Math.floor(h / 24)} días`;
 }
 
-function contactSeller(storeName, productName){
-  showToast('💬', 'Abriendo WhatsApp para "'+productName+'"...');
+async function toggleLike(productId, btn) {
+  const p = activeProducts.find(x => x.id === productId);
+  if (!p) return;
+  const liked = btn.classList.contains('liked');
+  p.likes = (p.likes || 0) + (liked ? -1 : 1);
+  btn.classList.toggle('liked', !liked);
+  btn.innerHTML = (liked ? '♡' : '♥') + ' ' + p.likes;
+  await api.updateLikes(productId, p.likes);
+}
+
+function contactSeller(storeName, productName) {
+  showToast('💬', 'Contactando vendedor de "' + productName + '"...');
 }
 
 // ==================== PUBLISH ====================
-function togglePublish(){
+function togglePublish() {
   publishOpen = !publishOpen;
   document.getElementById('publish-bar').classList.toggle('open', publishOpen);
   document.getElementById('pub-ico').textContent = publishOpen ? '✕' : '＋';
 }
 
-function publishProduct(){
-  const s = stores.find(x=>x.id===activeId);
-  if(!s){ showToast('⚠', 'Selecciona una tienda primero'); return; }
+async function publishProduct() {
+  if (!activeStore) { showToast('⚠', 'Selecciona una tienda primero'); return; }
   const name = document.getElementById('pf-name').value.trim();
-  if(!name){ showToast('⚠', 'El nombre del producto es obligatorio'); return; }
-  const price = document.getElementById('pf-price').value.trim() || '$0.00';
-  const oldPrice = document.getElementById('pf-oldprice').value.trim();
-  const cat = document.getElementById('pf-cat').value.trim();
-  const desc = document.getElementById('pf-desc').value.trim();
-  const img = document.getElementById('pf-img').value.trim();
+  if (!name) { showToast('⚠', 'El nombre del producto es obligatorio'); return; }
 
-  const post = {
-    id: nextPostId++,
-    name, price, desc,
-    oldPrice: oldPrice || null,
-    tags: cat ? [cat] : [],
-    img: img || '',
-    time: 'ahora',
-    likes: 0,
-    liked: false
-  };
-  s.posts.push(post);
+  const btn = document.getElementById('btn-pub-submit');
+  btn.disabled = true;
+  btn.textContent = '...';
 
-  ['pf-name','pf-price','pf-oldprice','pf-cat','pf-desc','pf-img'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-
-  if(GH_TOKEN && GH_TOKEN !== 'TU_TOKEN_AQUI'){
-    pushProductToGithub(s, post).then(ok => {
-      showToast(ok ? '✓' : '⚠', ok ? 'Producto publicado y guardado ✓' : 'Publicado localmente (error al guardar)');
-    });
-  } else {
-    showToast('✓', 'Producto publicado en la tienda');
-  }
-
-  renderFeed(s);
-  renderSidebar(document.getElementById('search-input').value);
-  document.getElementById('hdr-sub').textContent = s.cat + '  ·  ' + s.posts.length + (s.posts.length===1?' producto':' productos');
-  document.getElementById('feed').scrollTop = 0;
-}
-
-// ==================== GITHUB (INTERNO) ====================
-
-// Genera un nombre de repo a partir del nombre de la tienda
-function slugify(name){
-  return name.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/[^a-z0-9]+/g,'-')
-    .replace(/^-+|-+$/g,'')
-    .slice(0, 50);
-}
-
-// Crea el repositorio en GitHub automáticamente
-async function createGithubRepo(storeName, storeDesc){
-  if(!GH_TOKEN || GH_TOKEN === 'TU_TOKEN_AQUI') return { ok: false, repo: null };
-  const repoName = 'mimercado-' + slugify(storeName) + '-' + Date.now().toString(36);
   try {
-    const r = await fetch('https://api.github.com/user/repos', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'token ' + GH_TOKEN,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: repoName,
-        description: storeDesc || ('Tienda MiMercado: ' + storeName),
-        private: false,
-        auto_init: true
-      })
+    const product = await api.createProduct({
+      store_id: activeStore.id,
+      name,
+      price: document.getElementById('pf-price').value.trim() || '$0.00',
+      old_price: document.getElementById('pf-oldprice').value.trim() || null,
+      tags: document.getElementById('pf-cat').value.trim() ? [document.getElementById('pf-cat').value.trim()] : [],
+      description: document.getElementById('pf-desc').value.trim(),
+      image_url: document.getElementById('pf-img').value.trim() || null,
+      likes: 0
     });
-    if(r.ok){
-      const data = await r.json();
-      return { ok: true, repo: data.name };
-    }
-    return { ok: false, repo: null };
-  } catch(e){
-    return { ok: false, repo: null };
-  }
-}
 
-// Guarda un producto como JSON en el repo de la tienda
-async function pushProductToGithub(store, post){
-  if(!GH_TOKEN || GH_TOKEN === 'TU_TOKEN_AQUI' || !store.repo) return false;
-  const path = `products/${post.id}-${slugify(post.name)}.json`;
-  const content = JSON.stringify({
-    id: post.id, name: post.name, price: post.price,
-    oldPrice: post.oldPrice, description: post.desc,
-    tags: post.tags, image: post.img,
-    store: store.name, category: store.cat,
-    timestamp: new Date().toISOString()
-  }, null, 2);
-  const encoded = btoa(unescape(encodeURIComponent(content)));
-  try {
-    const r = await fetch(`https://api.github.com/repos/${GH_OWNER}/${store.repo}/contents/${path}`, {
-      method: 'PUT',
-      headers: { 'Authorization': 'token ' + GH_TOKEN, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: `Nuevo producto: ${post.name}`, content: encoded })
+    activeProducts.unshift(product);
+    ['pf-name','pf-price','pf-oldprice','pf-cat','pf-desc','pf-img'].forEach(id => {
+      document.getElementById(id).value = '';
     });
-    return r.ok;
-  } catch(e){ return false; }
+
+    renderFeed();
+    document.getElementById('hdr-sub').textContent = (activeStore.category || '') + '  ·  ' + activeProducts.length + (activeProducts.length === 1 ? ' producto' : ' productos');
+    document.getElementById('feed').scrollTop = 0;
+    showToast('✓', 'Producto guardado en Supabase');
+  } catch(e) {
+    showToast('⚠', 'Error al publicar el producto');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Publicar →';
+  }
 }
 
 // ==================== MODAL CREAR TIENDA ====================
-function openCreateStore(){
-  // Reset form
+function openCreateStore() {
   document.getElementById('cs-name').value = '';
   document.getElementById('cs-desc').value = '';
   document.getElementById('create-form').classList.remove('hidden');
@@ -840,7 +781,7 @@ function openCreateStore(){
   document.getElementById('modal-create').classList.remove('hidden');
 }
 
-function buildColorGrid(){
+function buildColorGrid() {
   const grid = document.getElementById('color-grid');
   grid.innerHTML = '';
   STORE_COLORS.forEach(c => {
@@ -856,73 +797,58 @@ function buildColorGrid(){
   });
 }
 
-async function createStore(){
+async function createStore() {
   const name = document.getElementById('cs-name').value.trim();
-  if(!name){ showToast('⚠', 'Escribe el nombre de la tienda'); return; }
-  const desc = document.getElementById('cs-desc').value.trim();
-  const cat  = document.getElementById('cs-cat').value;
+  if (!name) { showToast('⚠', 'Escribe el nombre de la tienda'); return; }
 
-  // Mostrar spinner
   document.getElementById('create-form').classList.add('hidden');
   document.getElementById('creating-state').classList.remove('hidden');
-  document.getElementById('creating-msg').textContent = 'Creando tu tienda...';
+  document.getElementById('btn-create-ok').disabled = true;
 
-  // Intentar crear repo en GitHub automáticamente
-  let repoName = null;
-  if(GH_TOKEN && GH_TOKEN !== 'TU_TOKEN_AQUI'){
-    document.getElementById('creating-msg').textContent = 'Configurando almacenamiento...';
-    const result = await createGithubRepo(name, desc);
-    repoName = result.repo;
+  try {
+    const store = await api.createStore({
+      name,
+      description: document.getElementById('cs-desc').value.trim(),
+      category: document.getElementById('cs-cat').value,
+      color: selectedColor
+    });
+    stores.push(store);
+    closeModal('modal-create');
+    renderSidebar();
+    selectStore(store);
+    showToast('🏪', '"' + name + '" creada y guardada en Supabase');
+  } catch(e) {
+    showToast('⚠', 'Error al crear la tienda');
+    document.getElementById('create-form').classList.remove('hidden');
+    document.getElementById('creating-state').classList.add('hidden');
+    document.getElementById('btn-create-ok').disabled = false;
   }
-
-  // Pequeña pausa para que el spinner se vea fluido
-  await new Promise(r => setTimeout(r, 500));
-
-  const store = {
-    id: nextStoreId++,
-    name, desc, cat,
-    repo: repoName,   // null si no hay token o falló
-    color: selectedColor,
-    posts: []
-  };
-  stores.push(store);
-
-  closeModal('modal-create');
-  renderSidebar();
-  selectStore(store.id);
-  showToast('🏪', '"' + name + '" creada con éxito');
 }
 
-// ==================== MODALS ====================
-function closeModal(id){
+// ==================== UTILS ====================
+function closeModal(id) {
   document.getElementById(id).classList.add('hidden');
 }
 
-// ==================== TOAST ====================
 let toastTimer = null;
-function showToast(ico, msg){
+function showToast(ico, msg) {
   const t = document.getElementById('toast');
   document.getElementById('toast-ico').textContent = ico;
   document.getElementById('toast-msg').textContent = msg;
   t.classList.add('show');
-  if(toastTimer) clearTimeout(toastTimer);
+  if (toastTimer) clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// ==================== KEYBOARD & CLICK OUTSIDE ====================
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape'){
-    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
-  }
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
 });
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if(e.target === overlay) overlay.classList.add('hidden');
-  });
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.add('hidden'); });
 });
 
-// ==================== INIT ====================
-renderSidebar();
+// ==================== START ====================
+init();
 </script>
 </body>
 </html>
