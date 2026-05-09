@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MiMercado — Plataforma de Tiendas</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -703,6 +704,11 @@ input,textarea,select{font-family:var(--font-body)}
 const GH_OWNER  = '-';   // Tu usuario de GitHub
 const GH_TOKEN  = '-';               // ← Pon aquí tu token de GitHub (ghp_xxx...)
 
+// Supabase configuración
+const SUPABASE_URL = 'https://cllfjtsypgjasdggbswb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsbGZqdHN5cGdqYXNkZ2dic3diIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5OTcxMjksImV4cCI6MjA5MzU3MzEyOX0.xF2H-d3ta4AHq1ah7koZ4da0GUhBkRt-wX_vjgkVBQA';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 // ==================== DATA ====================
 const STORE_COLORS = ['#e8c040','#60a5fa','#4ade80','#f87171','#a78bfa','#fb923c','#34d399','#f472b6','#38bdf8','#facc15'];
 const USERS_KEY = 'mimercado_users';
@@ -733,6 +739,11 @@ function loadSavedData(){
     if(Array.isArray(savedStores) && savedStores.length) stores = savedStores;
     const savedUserId = localStorage.getItem(CURRENT_USER_KEY);
     currentUser = users.find(u => u.id === savedUserId) || null;
+
+    // Sincronizar con Supabase si hay usuario logueado
+    if(currentUser){
+      syncFromSupabase();
+    }
   } catch(e){
     users = [];
     currentUser = null;
@@ -744,15 +755,113 @@ function loadSavedData(){
   }, 99) + 1;
 }
 
+async function syncFromSupabase(){
+  try {
+    // Fetch users
+    const { data: remoteUsers, error: usersError } = await supabase
+      .from('users')
+      .select('*');
+
+    if(!usersError && remoteUsers){
+      // Merge remote users with local
+      const localUserIds = users.map(u => u.id);
+      const newUsers = remoteUsers.filter(u => !localUserIds.includes(u.id));
+      users = [...users, ...newUsers];
+    }
+
+    // Fetch stores
+    const { data: remoteStores, error: storesError } = await supabase
+      .from('stores')
+      .select('*')
+      .eq('ownerId', currentUser.id);
+
+    if(storesError) throw storesError;
+
+    // Fetch posts for each store
+    const syncedStores = [];
+    for(const store of remoteStores || []){
+      const { data: posts, error: postsError } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('storeId', store.id);
+
+      if(postsError) throw postsError;
+
+      store.posts = posts || [];
+      syncedStores.push(store);
+    }
+
+    // Merge with local stores (prefer remote)
+    stores = syncedStores.length > 0 ? syncedStores : stores;
+
+    // Update IDs
+    nextStoreId = Math.max(nextStoreId, ...stores.map(s => s.id)) + 1;
+    nextPostId = Math.max(nextPostId, ...stores.flatMap(s => s.posts.map(p => p.id))) + 1;
+
+  } catch(e){
+    console.error('Error syncing from Supabase:', e);
+  }
+}
+
 function saveUsers(){
   localStorage.setItem(USERS_KEY, JSON.stringify(users));
   if(currentUser) localStorage.setItem(CURRENT_USER_KEY, currentUser.id);
   else localStorage.removeItem(CURRENT_USER_KEY);
+
+  // Sincronizar usuarios con Supabase
+  syncUsersToSupabase();
+}
+
+async function syncUsersToSupabase(){
+  try {
+    for(const user of users){
+      const { error } = await supabase
+        .from('users')
+        .upsert(user, { onConflict: 'id' });
+
+      if(error) throw error;
+    }
+  } catch(e){
+    console.error('Error syncing users to Supabase:', e);
+  }
 }
 
 function saveStores(){
   localStorage.setItem(STORES_KEY, JSON.stringify(stores));
   if(activeId) localStorage.setItem(ACTIVE_STORE_KEY, String(activeId));
+
+  // Sincronizar con Supabase si hay usuario logueado
+  if(currentUser){
+    syncToSupabase();
+  }
+}
+
+async function syncToSupabase(){
+  try {
+    // Save stores (without posts)
+    for(const store of stores){
+      const storeData = { ...store };
+      delete storeData.posts; // posts saved separately
+
+      const { error } = await supabase
+        .from('stores')
+        .upsert(storeData, { onConflict: 'id' });
+
+      if(error) throw error;
+
+      // Save posts
+      for(const post of store.posts || []){
+        const postData = { ...post, storeId: store.id };
+        const { error: postError } = await supabase
+          .from('posts')
+          .upsert(postData, { onConflict: 'id' });
+
+        if(postError) throw postError;
+      }
+    }
+  } catch(e){
+    console.error('Error syncing to Supabase:', e);
+  }
 }
 
 function hasGithubConfig(){
