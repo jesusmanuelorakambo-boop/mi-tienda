@@ -708,30 +708,9 @@ const STORE_COLORS = ['#e8c040','#60a5fa','#4ade80','#f87171','#a78bfa','#fb923c
 const USERS_KEY = 'mimercado_users';
 const CURRENT_USER_KEY = 'mimercado_current_user';
 const STORES_KEY = 'mimercado_stores';
+const ACTIVE_STORE_KEY = 'mimercado_active_store';
 
-let stores = [
-  {
-    id:1,name:"Boutique Luna",desc:"Ropa femenina exclusiva y accesorios de moda",
-    cat:"Ropa y moda",repo:"boutique-luna",color:"#e8c040",ownerId:"demo-luna",ownerName:"Boutique Luna",phone:"+240555000101",
-    posts:[
-      {id:1,name:"Vestido Florido",desc:"Elegante vestido de verano con estampado de flores. Tela fresca y ligera, perfecta para el calor.",price:"$45.00",oldPrice:"$60.00",tags:["verano","floral","mujer"],img:"https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=600&q=80",time:"hace 2 horas",likes:12,liked:false},
-      {id:2,name:"Blusa de Seda Premium",desc:"Blusa de seda natural con caída perfecta. Disponible en blanco, negro y azul marino.",price:"$38.00",tags:["premium","seda","elegante"],img:"https://images.unsplash.com/photo-1562157873-818bc0726f68?w=600&q=80",time:"hace 5 horas",likes:8,liked:false}
-    ]
-  },
-  {
-    id:2,name:"TechStore Pro",desc:"Gadgets, electrónica y accesorios tecnológicos",
-    cat:"Electrónica",repo:"techstore-pro",color:"#60a5fa",ownerId:"demo-tech",ownerName:"TechStore Pro",phone:"+240555000202",
-    posts:[
-      {id:1,name:"Auriculares Inalámbricos",desc:"Sonido de alta fidelidad con cancelación activa de ruido. 30h de batería, carga rápida USB-C.",price:"$89.00",oldPrice:"$110.00",tags:["audio","wireless","ANC"],img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",time:"hace 1 hora",likes:23,liked:false},
-      {id:2,name:"Smartwatch Deportivo",desc:"Monitoreo de salud 24/7, GPS integrado, resistente al agua hasta 50m. Compatible con iOS y Android.",price:"$129.00",tags:["smartwatch","deporte","GPS"],img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",time:"hace 3 horas",likes:17,liked:false}
-    ]
-  },
-  {
-    id:3,name:"Artesanías del Sur",desc:"Piezas únicas hechas a mano con materiales locales",
-    cat:"Artesanías",repo:"artesanias-sur",color:"#4ade80",ownerId:"demo-art",ownerName:"Artesanías del Sur",phone:"+240555000303",
-    posts:[]
-  }
-];
+let stores = [];
 
 let users = [];
 let currentUser = null;
@@ -773,6 +752,11 @@ function saveUsers(){
 
 function saveStores(){
   localStorage.setItem(STORES_KEY, JSON.stringify(stores));
+  if(activeId) localStorage.setItem(ACTIVE_STORE_KEY, String(activeId));
+}
+
+function hasGithubConfig(){
+  return GH_OWNER && GH_OWNER !== '-' && GH_TOKEN && GH_TOKEN !== '-' && GH_TOKEN !== 'TU_TOKEN_AQUI';
 }
 
 function updateAuthUI(){
@@ -828,6 +812,28 @@ function switchAuth(mode){
 
 function normalizePhone(phone){
   return phone.replace(/[^\d+]/g, '');
+}
+
+function getSelectedImage(){
+  const fileInput = document.getElementById('pf-img-file');
+  const file = fileInput.files && fileInput.files[0];
+  if(!file) return Promise.resolve('');
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('No se pudo leer la imagen'));
+    reader.readAsDataURL(file);
+  });
+}
+
+function openWhatsApp(phone, storeName, productName){
+  const cleanPhone = normalizePhone(phone).replace(/^\+/, '');
+  if(!cleanPhone){
+    showToast('⚠', 'El vendedor no tiene teléfono registrado');
+    return;
+  }
+  const text = encodeURIComponent(`Hola, vengo de MiMercado. Me interesa "${productName}" de ${storeName}.`);
+  window.open(`https://wa.me/${cleanPhone}?text=${text}`, '_blank', 'noopener');
 }
 
 function registerUser(){
@@ -931,6 +937,8 @@ function selectStore(id){
   publishOpen = false;
   document.getElementById('publish-bar').classList.remove('open');
   document.getElementById('pub-ico').textContent = '＋';
+  localStorage.setItem(ACTIVE_STORE_KEY, String(activeId));
+  updateStoreActions();
 }
 
 // ==================== FEED ====================
@@ -978,7 +986,7 @@ function createPostCard(store, p){
       ${p.desc ? `<div class="post-desc">${p.desc}</div>` : ''}
       ${tags ? `<div class="post-tags">${tags}</div>` : ''}
       <div class="post-actions">
-        <button class="btn-contact" onclick="contactSeller('${store.name}','${p.name}')">Contactar vendedor</button>
+        <button class="btn-contact" onclick="contactSeller(${store.id},${p.id})">Contactar por WhatsApp</button>
         <button class="btn-like${p.liked?' liked':''}" onclick="toggleLike(${store.id},${p.id},this)">
           ${p.liked ? '♥' : '♡'} ${p.likes}
         </button>
@@ -1001,29 +1009,54 @@ function toggleLike(storeId, postId, btn){
   p.likes += p.liked ? 1 : -1;
   btn.className = 'btn-like' + (p.liked ? ' liked' : '');
   btn.innerHTML = (p.liked ? '♥' : '♡') + ' ' + p.likes;
+  saveStores();
 }
 
-function contactSeller(storeName, productName){
-  showToast('💬', 'Abriendo WhatsApp para "'+productName+'"...');
+function contactSeller(storeId, productId){
+  const s = stores.find(x=>x.id===storeId);
+  const p = s && s.posts.find(x=>x.id===productId);
+  if(!s || !p) return;
+  showToast('💬', 'Abriendo WhatsApp para "'+p.name+'"...');
+  openWhatsApp(s.phone, s.name, p.name);
 }
 
 // ==================== PUBLISH ====================
 function togglePublish(){
+  const s = stores.find(x=>x.id===activeId);
+  if(!s){ showToast('⚠', 'Selecciona una tienda primero'); return; }
+  if(!requireAuth('Inicia sesión para publicar productos')) return;
+  if(!isStoreOwner(s)){
+    showToast('⚠', 'Solo el dueño puede publicar en esta tienda');
+    return;
+  }
   publishOpen = !publishOpen;
   document.getElementById('publish-bar').classList.toggle('open', publishOpen);
   document.getElementById('pub-ico').textContent = publishOpen ? '✕' : '＋';
 }
 
-function publishProduct(){
+async function publishProduct(){
   const s = stores.find(x=>x.id===activeId);
   if(!s){ showToast('⚠', 'Selecciona una tienda primero'); return; }
+  if(!requireAuth('Inicia sesión para publicar productos')) return;
+  if(!isStoreOwner(s)){
+    showToast('⚠', 'Solo el dueño puede publicar en esta tienda');
+    return;
+  }
   const name = document.getElementById('pf-name').value.trim();
   if(!name){ showToast('⚠', 'El nombre del producto es obligatorio'); return; }
   const price = document.getElementById('pf-price').value.trim() || '$0.00';
   const oldPrice = document.getElementById('pf-oldprice').value.trim();
   const cat = document.getElementById('pf-cat').value.trim();
   const desc = document.getElementById('pf-desc').value.trim();
-  const img = document.getElementById('pf-img').value.trim();
+  const linkedImg = document.getElementById('pf-img').value.trim();
+  let importedImg = '';
+  try {
+    importedImg = await getSelectedImage();
+  } catch(e){
+    showToast('⚠', 'No se pudo importar la imagen');
+    return;
+  }
+  const img = importedImg || linkedImg;
 
   const post = {
     id: nextPostId++,
@@ -1036,12 +1069,13 @@ function publishProduct(){
     liked: false
   };
   s.posts.push(post);
+  saveStores();
 
-  ['pf-name','pf-price','pf-oldprice','pf-cat','pf-desc','pf-img'].forEach(id => {
+  ['pf-name','pf-price','pf-oldprice','pf-cat','pf-desc','pf-img','pf-img-file'].forEach(id => {
     document.getElementById(id).value = '';
   });
 
-  if(GH_TOKEN && GH_TOKEN !== 'TU_TOKEN_AQUI'){
+  if(hasGithubConfig()){
     pushProductToGithub(s, post).then(ok => {
       showToast(ok ? '✓' : '⚠', ok ? 'Producto publicado y guardado ✓' : 'Publicado localmente (error al guardar)');
     });
@@ -1068,7 +1102,7 @@ function slugify(name){
 
 // Crea el repositorio en GitHub automáticamente
 async function createGithubRepo(storeName, storeDesc){
-  if(!GH_TOKEN || GH_TOKEN === 'TU_TOKEN_AQUI') return { ok: false, repo: null };
+  if(!hasGithubConfig()) return { ok: false, repo: null };
   const repoName = 'mimercado-' + slugify(storeName) + '-' + Date.now().toString(36);
   try {
     const r = await fetch('https://api.github.com/user/repos', {
@@ -1096,7 +1130,7 @@ async function createGithubRepo(storeName, storeDesc){
 
 // Guarda un producto como JSON en el repo de la tienda
 async function pushProductToGithub(store, post){
-  if(!GH_TOKEN || GH_TOKEN === 'TU_TOKEN_AQUI' || !store.repo) return false;
+  if(!hasGithubConfig() || !store.repo) return false;
   const path = `products/${post.id}-${slugify(post.name)}.json`;
   const content = JSON.stringify({
     id: post.id, name: post.name, price: post.price,
@@ -1118,6 +1152,7 @@ async function pushProductToGithub(store, post){
 
 // ==================== MODAL CREAR TIENDA ====================
 function openCreateStore(){
+  if(!requireAuth('Inicia sesión para crear una tienda')) return;
   // Reset form
   document.getElementById('cs-name').value = '';
   document.getElementById('cs-desc').value = '';
@@ -1145,6 +1180,7 @@ function buildColorGrid(){
 }
 
 async function createStore(){
+  if(!requireAuth('Inicia sesión para crear una tienda')) return;
   const name = document.getElementById('cs-name').value.trim();
   if(!name){ showToast('⚠', 'Escribe el nombre de la tienda'); return; }
   const desc = document.getElementById('cs-desc').value.trim();
@@ -1157,7 +1193,7 @@ async function createStore(){
 
   // Intentar crear repo en GitHub automáticamente
   let repoName = null;
-  if(GH_TOKEN && GH_TOKEN !== 'TU_TOKEN_AQUI'){
+  if(hasGithubConfig()){
     document.getElementById('creating-msg').textContent = 'Configurando almacenamiento...';
     const result = await createGithubRepo(name, desc);
     repoName = result.repo;
@@ -1171,9 +1207,13 @@ async function createStore(){
     name, desc, cat,
     repo: repoName,   // null si no hay token o falló
     color: selectedColor,
+    ownerId: currentUser.id,
+    ownerName: currentUser.name,
+    phone: currentUser.phone,
     posts: []
   };
   stores.push(store);
+  saveStores();
 
   closeModal('modal-create');
   renderSidebar();
@@ -1210,7 +1250,13 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
 });
 
 // ==================== INIT ====================
+loadSavedData();
 renderSidebar();
+updateAuthUI();
+const savedActiveId = Number(localStorage.getItem(ACTIVE_STORE_KEY));
+if(savedActiveId && stores.some(s => s.id === savedActiveId)){
+  selectStore(savedActiveId);
+}
 </script>
 </body>
 </html>
