@@ -703,7 +703,11 @@ async function init() {
     renderSidebar();
   } catch(e) {
     console.error('Supabase init error:', e);
-    showToast('⚠','Error conectando con Supabase: ' + (e.message || e));
+    const msg = (e.message || e).toString();
+    const hint = msg.includes('Failed to fetch') || msg.includes('NetworkError')
+      ? ' Revisa tu conexión y asegúrate de abrir la página via HTTP(S), no file://.'
+      : '';
+    showToast('⚠','Error conectando con Supabase: ' + msg + hint);
     document.getElementById('stores-list').innerHTML = '<div class="stores-section-label">Mis tiendas</div><div style="padding:16px 8px;font-size:13px;color:var(--text3);text-align:center">Sin conexión</div>';
   }
 }
