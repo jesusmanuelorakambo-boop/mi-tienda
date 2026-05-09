@@ -29,7 +29,7 @@
   --font-head:'Syne',sans-serif;
   --font-body:'DM Sans',sans-serif;
 }
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font-body)}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);margin:0;padding:0}
 a{color:inherit;text-decoration:none}
 button{font-family:var(--font-body);cursor:pointer}
 input,textarea,select{font-family:var(--font-body)}
@@ -38,7 +38,7 @@ input,textarea,select{font-family:var(--font-body)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 
 /* ======== LAYOUT ======== */
-#app{display:flex;height:100vh;overflow:hidden}
+#app{display:flex;min-height:100vh;overflow:hidden;flex-wrap:wrap}
 
 /* ======== SIDEBAR ======== */
 #sidebar{
@@ -113,6 +113,18 @@ input,textarea,select{font-family:var(--font-body)}
   flex-shrink:0;
 }
 #sidebar-footer{padding:12px;border-top:1px solid var(--border)}
+.auth-sidebar{
+  display:flex;flex-direction:column;gap:8px;
+  padding:12px;border-top:1px solid var(--border);
+}
+.auth-status{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:9px 10px;
+  font-size:12px;color:var(--text2);line-height:1.4;
+}
+.auth-status strong{display:block;color:var(--text);font-size:13px;font-family:var(--font-head);margin-bottom:1px}
+.auth-actions{display:flex;gap:8px}
+.auth-actions .icon-btn{flex:1;justify-content:center;padding:0 10px}
 #btn-create-store{
   width:100%;background:var(--accent);color:#000;
   border:none;border-radius:var(--radius);padding:11px;
@@ -290,7 +302,7 @@ input,textarea,select{font-family:var(--font-body)}
   max-height:0;transition:max-height .3s ease,padding .3s ease;
   padding:0 24px;
 }
-#publish-bar.open{max-height:200px;padding:16px 24px}
+#publish-bar.open{max-height:360px;padding:16px 24px}
 .pub-bar-header{
   display:flex;align-items:center;justify-content:space-between;
   margin-bottom:12px;
@@ -304,6 +316,13 @@ input,textarea,select{font-family:var(--font-body)}
   border-radius:7px;padding:8px 10px;font-size:13px;
   color:var(--text);outline:none;transition:border-color .15s;
 }
+.pf input[type=file]{padding:7px 10px;color:var(--text2)}
+.pf input[type=file]::file-selector-button{
+  background:var(--bg4);color:var(--text);
+  border:1px solid var(--border2);border-radius:6px;
+  padding:5px 9px;margin-right:8px;cursor:pointer;
+  font-family:var(--font-body);font-size:12px;
+}
 .pf input:focus{border-color:var(--accent)}
 .pf input::placeholder{color:var(--text3)}
 .btn-pub{
@@ -314,6 +333,60 @@ input,textarea,select{font-family:var(--font-body)}
 }
 .btn-pub:hover{background:var(--accent3)}
 .btn-pub:active{transform:scale(.98)}
+
+.user-panel{display:flex;align-items:center;gap:8px}
+.user-chip{background:var(--bg3);border:1px solid var(--border);border-radius:999px;padding:8px 12px;font-size:13px;color:var(--text);}
+.auth-tabs{display:flex;gap:8px;margin-bottom:18px}
+.auth-tab{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:999px;padding:10px 0;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer;text-align:center;transition:background .15s,color .15s;}
+.auth-tab.active{background:var(--accent);color:#000;border-color:var(--accent2);}
+.auth-pane{display:none}
+.auth-pane.active{display:block}
+.auth-note{font-size:12px;color:var(--text3);margin-top:-8px;margin-bottom:14px}
+
+@media (max-width:960px){
+  #sidebar{width:100%;min-width:auto;max-height:320px;border-right:none;border-bottom:1px solid var(--border)}
+  #main{width:100%}
+  #store-header{padding:14px 18px;gap:12px;flex-wrap:wrap}
+  #hdr-actions{margin-left:0;width:100%;justify-content:flex-start}
+  #publish-bar.open{max-height:unset}
+  .pub-fields{flex-direction:column;align-items:stretch}
+  .pf{width:100%!important}
+  #feed{padding:18px}
+  #feed-inner{max-width:100%}
+  .post-card{border-radius:14px}
+  .form-row{grid-template-columns:1fr}
+  .modal{width:100%;max-width:520px;padding:22px}
+  .auth-sidebar{border-top:1px solid var(--border)}
+}
+
+@media (max-width:640px){
+  #app{display:block;overflow:visible}
+  #sidebar{max-height:none}
+  #sidebar-header{padding:14px}
+  #stores-list{max-height:220px}
+  #store-header{padding:12px 14px}
+  #hdr-actions .icon-btn{width:100%;justify-content:center}
+  #publish-bar{padding:0 14px}
+  #publish-bar.open{padding:14px;max-height:none}
+  .pub-bar-header{margin-bottom:10px}
+  .post-body{padding:14px}
+  .post-top-row{flex-direction:column;align-items:flex-start}
+  .post-actions{flex-direction:column}
+  .btn-contact{width:100%}
+  .btn-like{width:100%;justify-content:center}
+  #sidebar-search input{font-size:14px}
+  .modal-actions{flex-direction:column-reverse}
+  .btn-cancel{width:100%}
+  #toast{left:14px;right:14px;bottom:14px}
+}
+
+@media (max-width:420px){
+  #welcome{padding:32px 18px}
+  #welcome h1{font-size:24px}
+  .welcome-steps{flex-direction:column;width:100%}
+  .step-chip{max-width:none;width:100%}
+  .auth-actions{flex-direction:column}
+}
 
 /* MODALS */
 .modal-overlay{
@@ -427,6 +500,14 @@ input,textarea,select{font-family:var(--font-body)}
     <div id="stores-list">
       <div class="stores-section-label">Mis tiendas</div>
     </div>
+    <div class="auth-sidebar">
+      <div class="auth-status" id="auth-status">No has iniciado sesión</div>
+      <div class="auth-actions" id="auth-actions">
+        <button class="icon-btn" onclick="openAuth('login')">Entrar</button>
+        <button class="icon-btn" onclick="openAuth('register')">Registrarse</button>
+      </div>
+      <button class="icon-btn hidden" id="btn-logout" onclick="logoutUser()">Cerrar sesión</button>
+    </div>
     <div id="sidebar-footer">
       <button id="btn-create-store" onclick="openCreateStore()">
         <span style="font-size:16px;line-height:1">＋</span> Crear nueva tienda
@@ -477,6 +558,10 @@ input,textarea,select{font-family:var(--font-body)}
         <div class="pf" style="flex:1;min-width:180px">
           <label>URL de imagen</label>
           <input type="text" id="pf-img" placeholder="https://...">
+        </div>
+        <div class="pf" style="flex:1;min-width:180px">
+          <label>Importar imagen</label>
+          <input type="file" id="pf-img-file" accept="image/*">
         </div>
         <button class="btn-pub" onclick="publishProduct()">Publicar →</button>
       </div>
@@ -554,6 +639,61 @@ input,textarea,select{font-family:var(--font-body)}
   </div>
 </div>
 
+<!-- MODAL AUTENTICACIÓN -->
+<div class="modal-overlay hidden" id="modal-auth">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-ico">🔐</span>
+      <h2>Acceso de vendedor</h2>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchAuth('login')">Entrar</button>
+      <button class="auth-tab" id="tab-register" onclick="switchAuth('register')">Registrarse</button>
+    </div>
+
+    <div class="auth-pane active" id="pane-login">
+      <div class="auth-note">Inicia sesión para crear tiendas o publicar en tus tiendas.</div>
+      <div class="fg">
+        <label>Correo</label>
+        <input type="email" id="login-email" placeholder="tu@email.com">
+      </div>
+      <div class="fg">
+        <label>Contraseña</label>
+        <input type="password" id="login-pass" placeholder="Tu contraseña">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('modal-auth')">Cancelar</button>
+        <button class="btn-ok" onclick="loginUser()">Entrar</button>
+      </div>
+    </div>
+
+    <div class="auth-pane" id="pane-register">
+      <div class="auth-note">Tu teléfono se usará para que los compradores te contacten por WhatsApp.</div>
+      <div class="fg">
+        <label>Nombre</label>
+        <input type="text" id="reg-name" placeholder="Ej: María Nguema">
+      </div>
+      <div class="fg">
+        <label>Correo</label>
+        <input type="email" id="reg-email" placeholder="tu@email.com">
+      </div>
+      <div class="fg">
+        <label>Número de teléfono</label>
+        <input type="tel" id="reg-phone" placeholder="Ej: +240 555 000 000">
+      </div>
+      <div class="fg">
+        <label>Contraseña</label>
+        <input type="password" id="reg-pass" placeholder="Mínimo 4 caracteres">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal('modal-auth')">Cancelar</button>
+        <button class="btn-ok" onclick="registerUser()">Crear cuenta</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div id="toast"><span class="t-ico" id="toast-ico">✓</span><span id="toast-msg"></span></div>
 
@@ -565,11 +705,14 @@ const GH_TOKEN  = '-';               // ← Pon aquí tu token de GitHub (ghp_xx
 
 // ==================== DATA ====================
 const STORE_COLORS = ['#e8c040','#60a5fa','#4ade80','#f87171','#a78bfa','#fb923c','#34d399','#f472b6','#38bdf8','#facc15'];
+const USERS_KEY = 'mimercado_users';
+const CURRENT_USER_KEY = 'mimercado_current_user';
+const STORES_KEY = 'mimercado_stores';
 
 let stores = [
   {
     id:1,name:"Boutique Luna",desc:"Ropa femenina exclusiva y accesorios de moda",
-    cat:"Ropa y moda",repo:"boutique-luna",color:"#e8c040",
+    cat:"Ropa y moda",repo:"boutique-luna",color:"#e8c040",ownerId:"demo-luna",ownerName:"Boutique Luna",phone:"+240555000101",
     posts:[
       {id:1,name:"Vestido Florido",desc:"Elegante vestido de verano con estampado de flores. Tela fresca y ligera, perfecta para el calor.",price:"$45.00",oldPrice:"$60.00",tags:["verano","floral","mujer"],img:"https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=600&q=80",time:"hace 2 horas",likes:12,liked:false},
       {id:2,name:"Blusa de Seda Premium",desc:"Blusa de seda natural con caída perfecta. Disponible en blanco, negro y azul marino.",price:"$38.00",tags:["premium","seda","elegante"],img:"https://images.unsplash.com/photo-1562157873-818bc0726f68?w=600&q=80",time:"hace 5 horas",likes:8,liked:false}
@@ -577,7 +720,7 @@ let stores = [
   },
   {
     id:2,name:"TechStore Pro",desc:"Gadgets, electrónica y accesorios tecnológicos",
-    cat:"Electrónica",repo:"techstore-pro",color:"#60a5fa",
+    cat:"Electrónica",repo:"techstore-pro",color:"#60a5fa",ownerId:"demo-tech",ownerName:"TechStore Pro",phone:"+240555000202",
     posts:[
       {id:1,name:"Auriculares Inalámbricos",desc:"Sonido de alta fidelidad con cancelación activa de ruido. 30h de batería, carga rápida USB-C.",price:"$89.00",oldPrice:"$110.00",tags:["audio","wireless","ANC"],img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",time:"hace 1 hora",likes:23,liked:false},
       {id:2,name:"Smartwatch Deportivo",desc:"Monitoreo de salud 24/7, GPS integrado, resistente al agua hasta 50m. Compatible con iOS y Android.",price:"$129.00",tags:["smartwatch","deporte","GPS"],img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",time:"hace 3 horas",likes:17,liked:false}
@@ -585,16 +728,161 @@ let stores = [
   },
   {
     id:3,name:"Artesanías del Sur",desc:"Piezas únicas hechas a mano con materiales locales",
-    cat:"Artesanías",repo:"artesanias-sur",color:"#4ade80",
+    cat:"Artesanías",repo:"artesanias-sur",color:"#4ade80",ownerId:"demo-art",ownerName:"Artesanías del Sur",phone:"+240555000303",
     posts:[]
   }
 ];
 
+let users = [];
+let currentUser = null;
 let activeId = null;
 let nextStoreId = 4;
 let nextPostId = 100;
 let selectedColor = STORE_COLORS[0];
 let publishOpen = false;
+
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[ch]));
+}
+
+function loadSavedData(){
+  try {
+    users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+    const savedStores = JSON.parse(localStorage.getItem(STORES_KEY) || 'null');
+    if(Array.isArray(savedStores) && savedStores.length) stores = savedStores;
+    const savedUserId = localStorage.getItem(CURRENT_USER_KEY);
+    currentUser = users.find(u => u.id === savedUserId) || null;
+  } catch(e){
+    users = [];
+    currentUser = null;
+  }
+  nextStoreId = stores.reduce((max, s) => Math.max(max, Number(s.id) || 0), 0) + 1;
+  nextPostId = stores.reduce((max, s) => {
+    const postMax = (s.posts || []).reduce((pMax, p) => Math.max(pMax, Number(p.id) || 0), 0);
+    return Math.max(max, postMax);
+  }, 99) + 1;
+}
+
+function saveUsers(){
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  if(currentUser) localStorage.setItem(CURRENT_USER_KEY, currentUser.id);
+  else localStorage.removeItem(CURRENT_USER_KEY);
+}
+
+function saveStores(){
+  localStorage.setItem(STORES_KEY, JSON.stringify(stores));
+}
+
+function updateAuthUI(){
+  const status = document.getElementById('auth-status');
+  const actions = document.getElementById('auth-actions');
+  const logout = document.getElementById('btn-logout');
+  if(currentUser){
+    status.innerHTML = `<strong>${escapeHtml(currentUser.name)}</strong>${escapeHtml(currentUser.phone)}`;
+    actions.classList.add('hidden');
+    logout.classList.remove('hidden');
+  } else {
+    status.textContent = 'No has iniciado sesión';
+    actions.classList.remove('hidden');
+    logout.classList.add('hidden');
+  }
+  updateStoreActions();
+}
+
+function isStoreOwner(store){
+  return !!currentUser && store && store.ownerId === currentUser.id;
+}
+
+function updateStoreActions(){
+  const actions = document.getElementById('hdr-actions');
+  const btn = document.getElementById('btn-toggle-pub');
+  const s = stores.find(x => x.id === activeId);
+  if(!s || !actions || !btn) return;
+  actions.classList.remove('hidden');
+  btn.disabled = !isStoreOwner(s);
+  btn.title = isStoreOwner(s) ? 'Publicar producto' : 'Solo el dueño de esta tienda puede publicar aquí';
+  btn.style.opacity = isStoreOwner(s) ? '1' : '.55';
+}
+
+function requireAuth(message){
+  if(currentUser) return true;
+  showToast('🔐', message || 'Inicia sesión primero');
+  openAuth('login');
+  return false;
+}
+
+function openAuth(mode='login'){
+  switchAuth(mode);
+  document.getElementById('modal-auth').classList.remove('hidden');
+}
+
+function switchAuth(mode){
+  const isLogin = mode === 'login';
+  document.getElementById('tab-login').classList.toggle('active', isLogin);
+  document.getElementById('tab-register').classList.toggle('active', !isLogin);
+  document.getElementById('pane-login').classList.toggle('active', isLogin);
+  document.getElementById('pane-register').classList.toggle('active', !isLogin);
+}
+
+function normalizePhone(phone){
+  return phone.replace(/[^\d+]/g, '');
+}
+
+function registerUser(){
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim().toLowerCase();
+  const phone = document.getElementById('reg-phone').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  if(!name || !email || !phone || !pass){
+    showToast('⚠', 'Completa todos los datos de registro');
+    return;
+  }
+  if(pass.length < 4){
+    showToast('⚠', 'La contraseña debe tener al menos 4 caracteres');
+    return;
+  }
+  if(users.some(u => u.email === email)){
+    showToast('⚠', 'Ese correo ya está registrado');
+    return;
+  }
+  currentUser = {
+    id: 'user-' + Date.now().toString(36),
+    name,
+    email,
+    phone: normalizePhone(phone),
+    pass
+  };
+  users.push(currentUser);
+  saveUsers();
+  updateAuthUI();
+  closeModal('modal-auth');
+  showToast('✓', 'Cuenta creada. Ya puedes vender.');
+}
+
+function loginUser(){
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const pass = document.getElementById('login-pass').value;
+  const found = users.find(u => u.email === email && u.pass === pass);
+  if(!found){
+    showToast('⚠', 'Correo o contraseña incorrectos');
+    return;
+  }
+  currentUser = found;
+  saveUsers();
+  updateAuthUI();
+  closeModal('modal-auth');
+  showToast('✓', 'Sesión iniciada');
+}
+
+function logoutUser(){
+  currentUser = null;
+  saveUsers();
+  if(publishOpen) togglePublish();
+  updateAuthUI();
+  showToast('✓', 'Sesión cerrada');
+}
 
 // ==================== SIDEBAR ====================
 function renderSidebar(filter=''){
