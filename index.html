@@ -613,7 +613,7 @@ async function registerUser() {
     const existing = await api.get('users', `email=eq.${encodeURIComponent(email)}&select=id`);
     if (existing.length) { showToast('⚠','Ese correo ya está registrado'); return; }
     const user = await api.post('users', { name, email, phone, password_hash: btoa(pass) });
-    saveSession({ id: user.id, name, email, phone });
+    saveSession({ id: user.id, name, email, phone, supabase: true });
   } catch(e) {
     // Fallback: keep users in localStorage only
     const lsUsers = JSON.parse(localStorage.getItem(LS_USERS_KEY) || '[]');
@@ -621,7 +621,7 @@ async function registerUser() {
     const user = { id: generateUUID(), name, email, phone, pass };
     lsUsers.push(user);
     localStorage.setItem(LS_USERS_KEY, JSON.stringify(lsUsers));
-    saveSession({ id: user.id, name, email, phone });
+    saveSession({ id: user.id, name, email, phone, supabase: false });
   }
   closeModal('modal-auth');
   showToast('✓', '¡Bienvenido/a, ' + name.split(' ')[0] + '!');
@@ -638,7 +638,7 @@ async function loginUser() {
     const rows = await api.get('users', `email=eq.${encodeURIComponent(email)}&select=*`);
     const user = rows[0];
     if (user && user.password_hash === btoa(pass)) {
-      saveSession({ id: user.id, name: user.name, email: user.email, phone: user.phone });
+      saveSession({ id: user.id, name: user.name, email: user.email, phone: user.phone, supabase: true });
       closeModal('modal-auth');
       showToast('✓', '¡Hola, ' + user.name.split(' ')[0] + '!');
       return;
@@ -649,7 +649,7 @@ async function loginUser() {
   const lsUsers = JSON.parse(localStorage.getItem(LS_USERS_KEY) || '[]');
   const lu = lsUsers.find(u => u.email === email && u.pass === pass);
   if (lu) {
-    saveSession({ id: lu.id, name: lu.name, email: lu.email, phone: lu.phone });
+    saveSession({ id: lu.id, name: lu.name, email: lu.email, phone: lu.phone, supabase: false });
     closeModal('modal-auth');
     showToast('✓', '¡Hola, ' + lu.name.split(' ')[0] + '!');
     return;
@@ -980,6 +980,10 @@ function buildColorGrid() {
 
 async function createStore() {
   if (!requireAuth('crear una tienda')) return;
+  if (currentUser && currentUser.supabase === false) {
+    showToast('⚠','Tu cuenta está en el navegador, no en Supabase. Regístrate/ingresa de nuevo cuando Supabase funcione.');
+    return;
+  }
   const name = v('cs-name');
   if (!name) { showToast('⚠','Escribe el nombre de la tienda'); return; }
 
