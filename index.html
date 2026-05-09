@@ -687,7 +687,8 @@ async function init() {
   loadSession();
   renderAuthSidebar();
   try {
-    stores = await api.get('stores', 'order=created_at.asc');
+    const query = currentUser ? `owner_id=eq.${currentUser.id}&order=created_at.asc` : 'order=created_at.asc';
+    stores = await api.get('stores', query);
     renderSidebar();
   } catch(e) {
     showToast('⚠','Error conectando con Supabase');
