@@ -702,7 +702,8 @@ async function init() {
     stores = await api.get('stores', query);
     renderSidebar();
   } catch(e) {
-    showToast('⚠','Error conectando con Supabase');
+    console.error('Supabase init error:', e);
+    showToast('⚠','Error conectando con Supabase: ' + (e.message || e));
     document.getElementById('stores-list').innerHTML = '<div class="stores-section-label">Mis tiendas</div><div style="padding:16px 8px;font-size:13px;color:var(--text3);text-align:center">Sin conexión</div>';
   }
 }
