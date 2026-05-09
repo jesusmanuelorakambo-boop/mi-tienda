@@ -777,17 +777,43 @@ async function syncFromSupabase(){
 
     if(storesError) throw storesError;
 
+    // Map columns
+    const mappedStores = (remoteStores || []).map(s => ({
+      id: s.id,
+      name: s.name,
+      desc: s.description,
+      cat: s.category,
+      repo: s.repo,
+      color: s.color,
+      ownerId: s.ownerId,
+      ownerName: s.ownerName,
+      phone: s.phone,
+      posts: [] // will be filled later
+    }));
+
     // Fetch posts for each store
     const syncedStores = [];
-    for(const store of remoteStores || []){
+    for(const store of mappedStores){
       const { data: posts, error: postsError } = await supabase
-        .from('posts')
+        .from('products')
         .select('*')
-        .eq('storeId', store.id);
+        .eq('store_id', store.id);
 
       if(postsError) throw postsError;
 
-      store.posts = posts || [];
+      // Map columns
+      store.posts = (posts || []).map(p => ({
+        id: p.id,
+        name: p.name,
+        price: p.price,
+        description: p.description,
+        oldPrice: p.old_price,
+        tags: p.tags,
+        image_url: p.image_url,
+        time: p.time || 'ahora',
+        likes: p.likes || 0,
+        liked: p.liked || false
+      }));
       syncedStores.push(store);
     }
 
@@ -840,9 +866,17 @@ async function syncToSupabase(){
   try {
     // Save stores (without posts)
     for(const store of stores){
-      const storeData = { ...store };
-      delete storeData.posts; // posts saved separately
-
+      const storeData = {
+        id: store.id,
+        name: store.name,
+        description: store.desc || store.description,
+        category: store.cat || store.category,
+        repo: store.repo,
+        color: store.color,
+        ownerId: store.ownerId,
+        ownerName: store.ownerName,
+        phone: store.phone
+      };
       const { error } = await supabase
         .from('stores')
         .upsert(storeData, { onConflict: 'id' });
@@ -851,9 +885,21 @@ async function syncToSupabase(){
 
       // Save posts
       for(const post of store.posts || []){
-        const postData = { ...post, storeId: store.id };
+        const postData = {
+          id: post.id,
+          store_id: store.id,
+          name: post.name,
+          price: post.price,
+          description: post.description,
+          old_price: post.oldPrice,
+          tags: post.tags,
+          image_url: post.image_url || post.img,
+          time: post.time,
+          likes: post.likes,
+          liked: post.liked
+        };
         const { error: postError } = await supabase
-          .from('posts')
+          .from('products')
           .upsert(postData, { onConflict: 'id' });
 
         if(postError) throw postError;
@@ -1168,11 +1214,11 @@ async function publishProduct(){
   const img = importedImg || linkedImg;
 
   const post = {
-    id: nextPostId++,
-    name, price, desc,
-    oldPrice: oldPrice || null,
+    id: crypto.randomUUID(),
+    name, price, description: desc,
+    old_price: oldPrice || null,
     tags: cat ? [cat] : [],
-    img: img || '',
+    image_url: img || '',
     time: 'ahora',
     likes: 0,
     liked: false
@@ -1312,8 +1358,8 @@ async function createStore(){
   await new Promise(r => setTimeout(r, 500));
 
   const store = {
-    id: nextStoreId++,
-    name, desc, cat,
+    id: crypto.randomUUID(),
+    name, description: desc, category: cat,
     repo: repoName,   // null si no hay token o falló
     color: selectedColor,
     ownerId: currentUser.id,
